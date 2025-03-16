@@ -8,7 +8,7 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - /home/$USER/dionysus/config/bazarr:/config
+      - /home/{$USER}/dionysus/config/bazarr:/config
       - /mnt/media/Movies:/movies
       - /mnt/media/TV Shows:/tv
     networks:
@@ -27,7 +27,7 @@ services:
       - DOCKER_MODS=linuxserver/mods:universal-calibre
       - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
     volumes:
-      - /home/$USER/dionysus/config/calibre-web:/config
+      - /home/{$USER}/dionysus/config/calibre-web:/config
       - /mnt/media/Books/Calibre/library:/books
     networks:
       - media
@@ -44,7 +44,7 @@ services:
       - TZ=Etc/UTC
       - DELUGE_LOGLEVEL=error #optional
     volumes:
-      - /home/$USER/dionysus/config/deluge:/config
+      - /home/{$USER}/dionysus/config/deluge:/config
       - /mnt/media/Downloads :/downloads
     networks:
       - media
@@ -61,9 +61,9 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
-      - /home/$USER/dionysus/config/homarr/configs:/app/data/configs
-      - /home/$USER/dionysus/config/homarr/icons:/app/public/icons
-      - /home/$USER/dionysus/config/homarr/data:/data
+      - /home/{$USER}/dionysus/config/homarr/configs:/app/data/configs
+      - /home/{$USER}/dionysus/config/homarr/icons:/app/public/icons
+      - /home/{$USER}/dionysus/config/homarr/data:/data
     networks:
       - media
     ports:
@@ -80,8 +80,8 @@ services:
       - '40081:81'
       - '40443:443'
     volumes:
-      - /home/$USER/dionysus/config/nginxproxymanager/data:/data
-      - /home/$USER/dionysus/config/nginxproxymanager/letsencrypt:/etc/letsencrypt
+      - /home/{$USER}/dionysus/config/nginxproxymanager/data:/data
+      - /home/{$USER}/dionysus/config/nginxproxymanager/letsencrypt:/etc/letsencrypt
 
   overseerr:
     image: sctx/overseerr:latest
@@ -95,7 +95,7 @@ services:
     ports:
       - 5055:5055
     volumes:
-    - /home/$USER/dionysus/config/overseerr:/config
+    - /home/{$USER}/dionysus/config/overseerr:/config
     restart: unless-stopped
 
   prowlarr:
@@ -106,7 +106,7 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - /home/$USER/dionysus/config/prowlarr:/config
+      - /home/{$USER}/dionysus/config/prowlarr:/config
     networks:
       - media
     ports:
@@ -122,7 +122,7 @@ services:
     ports:
       - "7878:7878"
     volumes:
-      - /home/$USER/dionysus/config/radarr:/config
+      - /home/{$USER}/dionysus/config/radarr:/config
       - /mnt/media/Movies:/movies
       - /mnt/media/Downloads :/downloads
     environment:
@@ -139,7 +139,7 @@ services:
     networks:
       - media
     volumes:
-      - /home/$USER/dionysus/config/recyclarr:/config
+      - /home/{$USER}/dionysus/config/recyclarr:/config
     environment:
       - TZ=Europe/Zurich
       - RECYCLARR_CREATE_CONFIG=true
@@ -153,7 +153,7 @@ services:
     ports:
       - 8989:8989
     volumes:
-      - /home/$USER/dionysus/config/sonarr:/config
+      - /home/{$USER}/dionysus/config/sonarr:/config
       - /mnt/media/TV Shows:/tv
       - /mnt/media/Downloads :/downloads
     environment:
@@ -166,7 +166,7 @@ services:
     container_name: tautulli
     restart: unless-stopped
     volumes:
-    - /home/$USER/dionysus/config/tautulli:/config
+    - /home/{$USER}/dionysus/config/tautulli:/config
     environment:
       - PUID=1000
       - PGID=1000
