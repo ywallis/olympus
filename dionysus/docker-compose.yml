@@ -122,7 +122,7 @@ services:
     ports:
       - "7878:7878"
     volumes:
-      - /home/$USER/dionysus/config/sonarr:/config
+      - /home/$USER/dionysus/config/radarr:/config
       - /mnt/media/Movies:/movies
       - /mnt/media/Downloads :/downloads
     environment:
