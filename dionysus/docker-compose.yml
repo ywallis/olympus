@@ -95,7 +95,7 @@ services:
     ports:
       - 5055:5055
     volumes:
-    - /home/${USER}/dionysus/config/overseerr:/config
+    - /home/${USER}/dionysus/config/overseerr:/app/config
     restart: unless-stopped
 
   prowlarr:
