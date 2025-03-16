@@ -1,0 +1,174 @@
+---
+services:
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /home/$USER/dionysus/config/bazarr:/config
+      - /mnt/media/Movies:/movies
+      - /mnt/media/TV Shows:/tv
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - DOCKER_MODS=linuxserver/mods:universal-calibre
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
+    volumes:
+      - /home/$USER/dionysus/config/calibre-web:/config
+      - /mnt/media/Books/Calibre/library:/books
+    ports:
+      - 8083:80
+    restart: unless-stopped
+
+  ddclient:
+    image: lscr.io/linuxserver/ddclient:latest
+    container_name: ddclient
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /home/$USER/dionysus/config/ddclient:/config
+    restart: unless-stopped
+
+  deluge:
+    image: lscr.io/linuxserver/deluge:latest
+    container_name: deluge
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - DELUGE_LOGLEVEL=error #optional
+    volumes:
+      - /home/$USER/dionysus/config/deluge:/config
+      - /mnt/media/Downloads :/downloads
+    ports:
+      - 8112:8112
+      - 6881:6881
+      - 6881:6881/udp
+      - 58846:58846 #optional
+    restart: unless-stopped
+
+  homarr:
+    container_name: homarr
+    image: ghcr.io/ajnart/homarr:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
+      - /home/$USER/dionysus/config/homarr/configs:/app/data/configs
+      - /home/$USER/dionysus/config/homarr/icons:/app/public/icons
+      - /home/$USER/dionysus/config/homarr/data:/data
+    ports:
+      - '7575:7575'
+
+  nginxproxymanager:
+    container_name: nginx-proxy
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '40080:80'
+      - '40081:81'
+      - '40443:443'
+    volumes:
+      - /home/$USER/dionysus/config/nginxproxymanager/data:/data
+      - /home/$USER/dionysus/config/nginxproxymanager/letsencrypt:/etc/letsencrypt
+
+  overseerr:
+    image: sctx/overseerr:latest
+    container_name: overseerr
+    environment:
+      - LOG_LEVEL=debug
+      - TZ=Etc/UTC
+      - PORT=5055 #optional
+    ports:
+      - 5055:5055
+    volumes:
+    - /home/$USER/dionysus/config/overseerr:/config
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /home/$USER/dionysus/config/prowlarr:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped 
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: unless-stopped
+    networks:
+      - media
+    ports:
+      - "7878:7878"
+    volumes:
+      - /home/$USER/dionysus/config/sonarr:/config
+      - /mnt/media/Movies:/movies
+      - /mnt/media/Downloads :/downloads
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Zurich
+
+  recyclarr:
+    image: ghcr.io/recyclarr/recyclarr
+#    read_only: true # <-- Add this to enable read-only mode
+#    tmpfs: /tmp # <-- Mount /tmp to a volume
+#    security_opt: ['no-new-privileges:true'] # Add this line
+    container_name: recyclarr
+    volumes:
+      - /home/$USER/dionysus/config/recyclarr:/config
+    environment:
+      - TZ=Europe/Zurich
+      - RECYCLARR_CREATE_CONFIG=true
+      
+  sonarr:
+  image: lscr.io/linuxserver/sonarr:latest
+  container_name: sonarr
+  restart: unless-stopped
+  networks:
+    - media
+  ports:
+    - 8989:8989
+  volumes:
+    - /home/$USER/dionysus/config/sonarr:/config
+    - /mnt/media/TV Shows:/tv
+    - /mnt/media/Downloads :/downloads
+  environment:
+    - PUID=1000
+    - PGID=1000
+    - TZ=Europe/Zurich
+
+  tautulli:
+    image: ghcr.io/tautulli/tautulli
+    container_name: tautulli
+    restart: unless-stopped
+    volumes:
+    - /home/$USER/dionysus/config/tautulli:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    ports:
+      - 8181:8181
+
+networks:
+  media:
+    driver: bridge
