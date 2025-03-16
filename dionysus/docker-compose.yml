@@ -30,17 +30,17 @@ services:
     ports:
       - 8083:80
     restart: unless-stopped
-
-  ddclient:
-    image: lscr.io/linuxserver/ddclient:latest
-    container_name: ddclient
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
-    volumes:
-      - /home/$USER/dionysus/config/ddclient:/config
-    restart: unless-stopped
+  #
+  # ddclient:
+  #   image: lscr.io/linuxserver/ddclient:latest
+  #   container_name: ddclient
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=Etc/UTC
+  #   volumes:
+  #     - /home/$USER/dionysus/config/ddclient:/config
+  #   restart: unless-stopped
 
   deluge:
     image: lscr.io/linuxserver/deluge:latest
