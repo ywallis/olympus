@@ -1,3 +1,4 @@
+---
 services:
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -6,11 +7,11 @@ services:
     networks:
       - media
     ports:
-      - "8989:8989"
+      - 8989:8989
     volumes:
-      - ./config/sonarr:/config
-      - /path/to/media:/media
-      - /path/to/downloads:/downloads
+      - /home/$USER/config/sonarr:/config
+      - /mnt/media/TV Shows:/tv
+      - /mnt/media/Downloads :/downloads
     environment:
       - PUID=1000
       - PGID=1000
@@ -25,13 +26,29 @@ services:
     ports:
       - "7878:7878"
     volumes:
-      - ./config/radarr:/config
-      - /path/to/media:/media
-      - /path/to/downloads:/downloads
+      - /home/$USER/config/sonarr:/config
+      - /mnt/media/Movies:/movies
+      - /mnt/media/Downloads :/downloads
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Zurich
+
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - DOCKER_MODS=linuxserver/mods:universal-calibre
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
+    volumes:
+      - /home/$USER/config/calibre-web:/config
+      - /mnt/media/Books/Calibre/library:/books
+    ports:
+      - 8083:80
+    restart: unless-stopped
 
 networks:
   media:
