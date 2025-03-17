@@ -55,32 +55,18 @@ services:
       - 58846:58846 #optional
     restart: unless-stopped
 
-  homarr2:
-    container_name: homarr2
+  homarr:
+    container_name: homarr
     image: ghcr.io/homarr-labs/homarr:latest
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
-      - ./homarr/appdata:/appdata
+      - /home/${USER}/dionysus/config/homarr/appdata:/appdata
     environment:
       - SECRET_ENCRYPTION_KEY=513b5b7fff67f103283279319d0da99be61e5ee10dee22fd37c2e5057561954e
     ports:
       - '7576:7575'
   
-  homarr:
-    container_name: homarr
-    image: ghcr.io/ajnart/homarr:latest
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
-      - /home/${USER}/dionysus/config/homarr/configs:/app/data/configs
-      - /home/${USER}/dionysus/config/homarr/icons:/app/public/icons
-      - /home/${USER}/dionysus/config/homarr/data:/data
-    networks:
-      - media
-    ports:
-      - '7575:7575'
-
   nginxproxymanager:
     container_name: nginx-proxy
     image: 'jc21/nginx-proxy-manager:latest'
