@@ -65,7 +65,7 @@ services:
     environment:
       - SECRET_ENCRYPTION_KEY=513b5b7fff67f103283279319d0da99be61e5ee10dee22fd37c2e5057561954e
     ports:
-      - '7576:7575'
+      - '7575:7575'
   
   nginxproxymanager:
     container_name: nginx-proxy
