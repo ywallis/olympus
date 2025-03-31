@@ -64,6 +64,8 @@ services:
       - /home/${USER}/dionysus/config/homarr/appdata:/appdata
     environment:
       - SECRET_ENCRYPTION_KEY=513b5b7fff67f103283279319d0da99be61e5ee10dee22fd37c2e5057561954e
+    networks:
+      - media
     ports:
       - '7575:7575'
   
