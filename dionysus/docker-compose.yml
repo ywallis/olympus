@@ -69,20 +69,6 @@ services:
     ports:
       - '7575:7575'
   
-  nginxproxymanager:
-    container_name: nginx-proxy
-    image: 'jc21/nginx-proxy-manager:latest'
-    restart: unless-stopped
-    networks:
-      - media
-    ports:
-      - '40080:80'
-      - '40081:81'
-      - '40443:443'
-    volumes:
-      - /home/${USER}/dionysus/config/nginxproxymanager/data:/data
-      - /home/${USER}/dionysus/config/nginxproxymanager/letsencrypt:/etc/letsencrypt
-
   overseerr:
     image: sctx/overseerr:latest
     container_name: overseerr
