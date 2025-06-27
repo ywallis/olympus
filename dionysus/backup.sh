@@ -1,5 +1,6 @@
 #/bin/bash
 
+USER=$(whoami)
 SOURCE="/home/$USER/dionysus"
 DESTINATION="rsync@hera.olympus:/volume1/Backup/"
 DATE=$(date +"%Y-%m-%d %H:%M:%S")
