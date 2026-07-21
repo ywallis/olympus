@@ -1,8 +1,8 @@
 #/bin/bash
 
 USER=$(whoami)
-SOURCE="/home/$USER/narcissus/immich/.env"
-DESTINATION="rsync@hera.olympus:/volume1/Backup/narcissus/immich/"
+SOURCE="/home/$USER/olympus/narcissus/.env"
+DESTINATION="rsync@hera.olympus:/volume1/Backup/narcissus/"
 DATE=$(date +"%Y-%m-%d %H:%M:%S")
 LOGDIR="/home/$USER/logs"
 LOGFILE="$LOGDIR/daily_backup.log"
