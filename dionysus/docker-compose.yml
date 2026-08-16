@@ -177,7 +177,7 @@ services:
       - TZ=Europe/Zurich
 
   recyclarr:
-    image: ghcr.io/recyclarr/recyclarr
+    image: ghcr.io/recyclarr/recyclarr:8
     #    read_only: true # <-- Add this to enable read-only mode
     #    tmpfs: /tmp # <-- Mount /tmp to a volume
     #    security_opt: ['no-new-privileges:true'] # Add this line
