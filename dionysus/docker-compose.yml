@@ -225,6 +225,19 @@ services:
     ports:
       - 8181:8181
 
+  shelfmark:
+    image: ghcr.io/calibrain/shelfmark:latest
+    container_name: shelfmark
+    environment:
+      PUID: 1000
+      PGID: 1000
+    ports:
+      - 8084:8084
+    restart: unless-stopped
+    volumes:
+      - ${BOOK_DOCK_PATH_NAS}:/books # Default destination for book downloads
+      - /dionysus/shelfmark/config:/config # App configuration
+
 networks:
   media:
     driver: bridge
