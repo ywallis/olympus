@@ -52,6 +52,7 @@ services:
     volumes:
       - ${BOOKS_HOST_PATH:-./books}:/books
       - /home/${USER}/dionysus/config/bookorbit/data/app:/data
+      - ${BOOK_DOCK_PATH_NAS}:/book_dock
     read_only: true
     tmpfs:
       - /tmp
