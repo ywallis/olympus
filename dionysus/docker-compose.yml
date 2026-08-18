@@ -236,7 +236,7 @@ services:
     restart: unless-stopped
     volumes:
       - ${BOOK_DOCK_PATH_NAS}:/books # Default destination for book downloads
-      - /dionysus/shelfmark/config:/config # App configuration
+      - /home/${USER}/dionysus/shelfmark/config:/config # App configuration
 
 networks:
   media:
