@@ -1,0 +1,9 @@
+# NAS mounts for dionysus, exported by hera over NFSv4. Append to /etc/fstab.
+#
+# _netdev orders these after the network is up; bare "defaults" is what lost
+# the boot race. nofail lets the host boot without the NAS, which is safe
+# because systemd/docker.service.d/wait-for-nfs.conf holds the containers back
+# separately.
+
+hera.olympus:/volume2/Media   /mnt/media   nfs  _netdev,nofail,hard,timeo=600,retrans=2  0  0
+hera.olympus:/volume1/Immich  /mnt/immich  nfs  _netdev,nofail,hard,timeo=600,retrans=2  0  0
