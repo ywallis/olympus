@@ -54,17 +54,20 @@ run() {
   fi
 }
 
-# Reads the terminal directly, not stdin: piped into bash -s, stdin is the
+# Talks to the terminal directly, not stdin: piped into bash -s, stdin is the
 # script text and a bare read would silently eat the next lines of it. Opening
 # /dev/tty is the test, since [ -r /dev/tty ] passes even where the open fails.
+# The prompt is printed rather than passed to read -p, which suppresses it
+# whenever stdin is not itself a terminal and leaves this looking hung.
 confirm() {
   [ "$APPLY" -eq 1 ] || return 0
   [ "$ASSUME_YES" -eq 1 ] && return 0
-  exec 3</dev/tty 2>/dev/null \
+  exec 3<>/dev/tty 2>/dev/null \
     || die "no terminal to confirm on; copy this to the host and run it there, or pass --yes"
   local reply
-  read -r -p "    $1 [y/N] " reply <&3
-  exec 3<&-
+  printf '    %s [y/N] ' "$1" >&3
+  read -r reply <&3
+  exec 3>&-
   [[ "$reply" =~ ^[Yy]$ ]] || die "aborted by user"
 }
 
