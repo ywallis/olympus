@@ -92,6 +92,24 @@ services:
       retries: 10
       start_period: 20s
 
+  cleanuparr:
+    image: ghcr.io/cleanuparr/cleanuparr:latest
+    container_name: cleanuparr
+    restart: unless-stopped
+    depends_on:
+      - deluge
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Zurich
+      - PORT=11011
+    volumes:
+      - /home/${USER}/dionysus/config/cleanuparr:/config
+    networks:
+      - media
+    ports:
+      - 11011:11011
+
   deluge:
     image: lscr.io/linuxserver/deluge:latest
     container_name: deluge
