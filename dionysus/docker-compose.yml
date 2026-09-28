@@ -182,6 +182,7 @@ services:
     #    read_only: true # <-- Add this to enable read-only mode
     #    tmpfs: /tmp # <-- Mount /tmp to a volume
     #    security_opt: ['no-new-privileges:true'] # Add this line
+    restart: unless-stopped
     container_name: recyclarr
     networks:
       - media
